@@ -1,0 +1,223 @@
+openapi: 3.0.1
+info:
+  title: Specmatic_Springboot
+  version: '1'
+paths:
+  /example/v1/hotels:
+    get:
+      summary: Get_particular_hotel
+      parameters: []
+      responses:
+        '200':
+          description: Get_particular_hotel
+          headers:
+            X-Application-Context:
+              required: true
+              schema:
+                type: string
+              examples:
+                SUCCESS:
+                  value: application:production
+            Transfer-Encoding:
+              required: true
+              schema:
+                type: string
+              examples:
+                SUCCESS:
+                  value: chunked
+            Date:
+              required: true
+              schema:
+                type: string
+              examples:
+                SUCCESS:
+                  value: Tue, 15 Nov 1994 08:12:31 GMT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hotels_ResponseBody'
+              examples:
+                SUCCESS:
+                  value:
+                    content:
+                      - id: 1
+                        name: Hotel One
+                        description: This is Hotel One
+                        city: City One
+                        rating: 4.5
+                    last: false
+                    totalPages: 10
+                    totalElements: 100
+                    first: true
+                    numberOfElements: 10
+                    sort: null
+                    size: 10
+                    number: 1
+    post:
+      summary: Add_Hotel
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hotels_RequestBody'
+            examples:
+              SUCCESS:
+                value:
+                  name: Hotel Two
+                  description: This is Hotel Two
+                  city: City Two
+                  rating: 4
+      responses:
+        '201':
+          description: Add_Hotel
+          headers:
+            X-Application-Context:
+              required: true
+              schema:
+                type: string
+              examples:
+                SUCCESS:
+                  value: application:production
+            Location:
+              required: true
+              schema:
+                type: string
+              examples:
+                SUCCESS:
+                  value: /example/v1/hotels/2
+            Date:
+              required: true
+              schema:
+                type: string
+              examples:
+                SUCCESS:
+                  value: Tue, 15 Nov 1994 08:12:31 GMT
+  /example/v1/hotels/{id}:
+    put:
+      summary: Update_Hotel
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+          examples:
+            SUCCESS:
+              value: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/1_RequestBody'
+            examples:
+              SUCCESS:
+                value:
+                  id: 1
+                  name: Updated Hotel One
+                  description: This is the updated Hotel One
+                  city: Updated City One
+                  rating: 4.7
+      responses:
+        '204':
+          description: Update_Hotel
+          headers:
+            X-Application-Context:
+              required: true
+              schema:
+                type: string
+              examples:
+                SUCCESS:
+                  value: application:production
+            Date:
+              required: true
+              schema:
+                type: string
+              examples:
+                SUCCESS:
+                  value: Tue, 15 Nov 1994 08:12:31 GMT
+components:
+  schemas:
+    Hotels_RequestBody:
+      required:
+        - city
+        - description
+        - name
+        - rating
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        city:
+          type: string
+        rating:
+          type: number
+    Content:
+      required:
+        - city
+        - description
+        - id
+        - name
+        - rating
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        city:
+          type: string
+        rating:
+          type: number
+    Hotels_ResponseBody:
+      required:
+        - content
+        - first
+        - last
+        - number
+        - numberOfElements
+        - size
+        - sort
+        - totalElements
+        - totalPages
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Content'
+        last:
+          type: boolean
+        totalPages:
+          type: number
+        totalElements:
+          type: number
+        first:
+          type: boolean
+        numberOfElements:
+          type: number
+        sort:
+          nullable: true
+        size:
+          type: number
+        number:
+          type: number
+    1_RequestBody:
+      required:
+        - city
+        - description
+        - id
+        - name
+        - rating
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        city:
+          type: string
+        rating:
+          type: number
