@@ -1,0 +1,153 @@
+openapi: 3.0.1
+info:
+  title: Specmatic_Springboot
+  version: "1"
+paths:
+  /example/v1/hotels:
+    get:
+      summary: Get_particular_hotel
+      parameters: []
+      responses:
+        "200":
+          description: Get_particular_hotel
+          headers:
+            X-Application-Context:
+              required: true
+              schema:
+                type: string
+            Transfer-Encoding:
+              required: true
+              schema:
+                type: string
+            Date:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hotels_ResponseBody'
+    post:
+      summary: Add_Hotel
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Hotels_RequestBody'
+      responses:
+        "201":
+          description: Add_Hotel
+          headers:
+            X-Application-Context:
+              required: true
+              schema:
+                type: string
+            Location:
+              required: true
+              schema:
+                type: string
+            Date:
+              required: true
+              schema:
+                type: string
+  /example/v1/hotels/2:
+    delete:
+      summary: Delete_Hotel
+      parameters: []
+      responses:
+        "404":
+          description: Delete_Hotel
+          headers:
+            X-Application-Context:
+              required: true
+              schema:
+                type: string
+            Transfer-Encoding:
+              required: true
+              schema:
+                type: string
+            Date:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/1_ResponseBody'
+components:
+  schemas:
+    Hotels_RequestBody:
+      required:
+      - city
+      - description
+      - name
+      - rating
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        city:
+          type: string
+        rating:
+          type: number
+    Content:
+      required:
+      - city
+      - description
+      - id
+      - name
+      - rating
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        city:
+          type: string
+        rating:
+          type: number
+    Hotels_ResponseBody:
+      required:
+      - content
+      - first
+      - last
+      - number
+      - numberOfElements
+      - size
+      - sort
+      - totalElements
+      - totalPages
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Content'
+        last:
+          type: boolean
+        totalPages:
+          type: number
+        totalElements:
+          type: number
+        first:
+          type: boolean
+        numberOfElements:
+          type: number
+        sort:
+          nullable: true
+        size:
+          type: number
+        number:
+          type: number
+    "1_ResponseBody":
+      required:
+      - detail
+      - message
+      properties:
+        detail:
+          type: string
+        message:
+          type: string
